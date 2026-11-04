@@ -1,0 +1,31 @@
+-- Write an SQL query to find the best-selling product in each product category. If there are two or more products with the same sales quantity, go by whichever product which has the higher review rating.
+
+-- Return the category name and product name in alphabetical order of the category.
+
+
+
+WITH tab1 as(SELECT
+  product_id,
+  category_name,
+  product_name,
+  sales_quantity,
+  rating,
+  ROW_NUMBER() OVER(
+    PARTITION BY products.category_name
+    ORDER BY product_sales.sales_quantity DESC , product_sales.rating DESC
+  
+  
+  
+  ) as nummer
+FROM products
+INNER JOIN product_sales
+USING(product_id)
+)
+
+SELECT
+ category_name,product_name
+
+
+FROM tab1
+
+WHERE nummer =1
